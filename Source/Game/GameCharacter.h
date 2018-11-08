@@ -28,6 +28,8 @@ public:
 
 	void LookUpAtRate(float Rate);
 
+	FVector GetVelocity();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
