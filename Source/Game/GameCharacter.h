@@ -7,6 +7,7 @@
 #include "GameCharacter.generated.h"
 
 class UInputComponent;
+class ATimeDilatedActorBase;
 
 UCLASS(config=Game)
 class AGameCharacter : public ACharacter
@@ -20,6 +21,8 @@ public:
 	
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 
+	virtual void Tick(float DeltaTime) override;
+
 	void MoveForward(float Val);
 
 	void MoveRight(float Val);
@@ -28,7 +31,7 @@ public:
 
 	void LookUpAtRate(float Rate);
 
-	FVector GetVelocity();
+	void AddTimeDilatedActor(ATimeDilatedActorBase* Actor) { TimeDilatedActors.Add(Actor); }
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -39,5 +42,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* Camera;
+
+private:
+	TArray<ATimeDilatedActorBase*> TimeDilatedActors;
 };
 

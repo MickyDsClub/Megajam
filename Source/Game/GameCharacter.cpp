@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimeDilatedActorBase.h"
 
 AGameCharacter::AGameCharacter()
 {
@@ -41,6 +42,16 @@ void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AGameCharacter::LookUpAtRate);
 }
 
+void AGameCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	for (auto& Actor : TimeDilatedActors)
+	{
+		Actor->SetCustomTimeDilation(GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed());
+	}
+}
+
 void AGameCharacter::MoveForward(float Value)
 {
 	if (Value != 0.0f)
@@ -65,9 +76,4 @@ void AGameCharacter::TurnAtRate(float Rate)
 void AGameCharacter::LookUpAtRate(float Rate)
 {
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-}
-
-FVector AGameCharacter::GetVelocity()
-{
-	return GetMovementComponent()->Velocity;
 }
