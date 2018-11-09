@@ -40,7 +40,18 @@ void ATimeDilatedActorBase::Tick(float DeltaTime)
 // NormalizedSpeed = Player.Velocity / Player.MaxVelocity
 void ATimeDilatedActorBase::SetCustomTimeDilation(float NormalizedSpeed)
 {
-	CustomTimeDilation = 1 - NormalizedSpeed;
+	switch (MovementType)
+	{
+	case EMovementType::MovesWithPlayer:
+		CustomTimeDilation = NormalizedSpeed;
+		break;
+	case EMovementType::MovesOppositeOfPlayer:
+		CustomTimeDilation = 1 - NormalizedSpeed;
+		break;
+	case EMovementType::Default:
+		CustomTimeDilation = 1;
+		break;
+	}
 }
 
 void ATimeDilatedActorBase::Move(float DeltaTime)

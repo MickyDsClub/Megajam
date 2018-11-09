@@ -8,6 +8,14 @@
 
 class AGameCharacter;
 
+UENUM(BlueprintType)
+enum class EMovementType : uint8
+{
+	MovesWithPlayer,
+	MovesOppositeOfPlayer,
+	Default
+};
+
 UCLASS()
 class GAME_API ATimeDilatedActorBase : public AActor
 {
@@ -37,6 +45,8 @@ protected:
 	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
 	FVector TargetLocation = FVector(0);
 
+	UPROPERTY(EditAnywhere)
+	EMovementType MovementType = EMovementType::Default;
 private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
@@ -47,7 +57,10 @@ private:
 
 	FTimerHandle TH_SwapDelay;
 
+
 	bool bTimerSet = false;
+	bool bMovesSameAsPlayer = false;
+	bool bMovesOppositeOfPlayer = false;
 
 	void Move(float DeltaTime);
 
