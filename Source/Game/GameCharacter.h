@@ -47,5 +47,7 @@ protected:
 
 private:
 	TArray<ATimeDilatedActorBase*> TimeDilatedActors;
+	FVector MapStartLocation;
+	FRotator MapStartRotation;
 };
 

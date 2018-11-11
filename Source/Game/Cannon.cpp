@@ -14,7 +14,7 @@ ACannon::ACannon()
 	PrimaryActorTick.bCanEverTick = true;
 
 	TimerTime = 0;
-	FireRate = 0.3f;
+	FireRate = 0.2f;
 	GunOffset = 50.f;
 }
 

@@ -24,6 +24,8 @@ AGameCharacter::AGameCharacter()
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	//saves the startlocation of each map, so the player can respawn there.
+	MapStartLocation = GetActorLocation();
 }
 
 void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -88,4 +90,6 @@ void AGameCharacter::LookUpAtRate(float Rate)
 void AGameCharacter::MoveToSpawn()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Running Function: MoveToSpawn"));
+	SetActorLocation(MapStartLocation);
+	SetActorRotation(MapStartRotation);
 }

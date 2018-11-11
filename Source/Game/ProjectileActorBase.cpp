@@ -28,6 +28,6 @@ void AProjectileActorBase::BeginOverlap(class AActor* OverlappedActor, class AAc
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlapping Player"));
 		Player->MoveToSpawn();
-		//Destroy();
+		//Destroy(); //Bullets will never be deleted, as we must remove them from ther TArray in player so as the game doesnt crash... NEEDS FIXING -HUGE MEMORY LEAK
 	}
 }
