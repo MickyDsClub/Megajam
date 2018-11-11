@@ -13,9 +13,8 @@ ACannon::ACannon()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-
-	bCanShoot = true;
-	FireRate = 1.f;
+	TimerTime = 0;
+	FireRate = 0.3f;
 	GunOffset = 50.f;
 }
 
@@ -30,27 +29,24 @@ void ACannon::BeginPlay()
 void ACannon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Shoot();
+
+	//Does timer like this as FTimerHandle doesnt react to CustomTimeDilation
+	TimerTime += DeltaTime;
+	if (TimerTime >= FireRate) 
+	{
+		Shoot();
+		TimerTime = 0;
+	}
 }
 
 void ACannon::Shoot()
 {
-	if (bCanShoot)
+	UWorld* World = GetWorld();
+	if (World)
 	{
-		UWorld* World = GetWorld();
-		if (World)
+		if (Projectile)
 		{
-			if (Projectile)
-			{
-				World->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
-				bCanShoot = false;
-			}
-			World->GetTimerManager().SetTimer(CanShootTimerHandle, this, &ACannon::ResetCanShoot, FireRate);
+			World->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
 		}
 	}
-}
-
-void ACannon::ResetCanShoot()
-{
-	bCanShoot = true;
 }

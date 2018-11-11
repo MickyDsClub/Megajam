@@ -37,8 +37,5 @@ public:
 		float GunOffset;
 private:
 
-	bool bCanShoot;
-	FTimerHandle  CanShootTimerHandle;
-
-	void ResetCanShoot();
+	float TimerTime;
 };
