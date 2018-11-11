@@ -31,14 +31,13 @@ public:
 		TSubclassOf<AProjectileActorBase> Projectile;
 
 	UPROPERTY(EditAnywhere)
-		float fireRate;
+		float FireRate;
 
 	UPROPERTY(EditAnywhere)
-		FVector gunOffset;
+		float GunOffset;
 private:
 
 	bool bCanShoot;
-
 	FTimerHandle  CanShootTimerHandle;
 
 	void ResetCanShoot();

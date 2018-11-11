@@ -15,8 +15,8 @@ ACannon::ACannon()
 
 
 	bCanShoot = true;
-	fireRate = 1.f;
-	gunOffset = FVector(100.f, 0.f, 0.f);
+	FireRate = 1.f;
+	GunOffset = 50.f;
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +30,6 @@ void ACannon::BeginPlay()
 void ACannon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	Shoot();
 }
 
@@ -43,10 +42,10 @@ void ACannon::Shoot()
 		{
 			if (Projectile)
 			{
-				World->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation() + gunOffset, GetActorRotation());
+				World->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
 				bCanShoot = false;
 			}
-			World->GetTimerManager().SetTimer(CanShootTimerHandle, this, &ACannon::ResetCanShoot, fireRate);
+			World->GetTimerManager().SetTimer(CanShootTimerHandle, this, &ACannon::ResetCanShoot, FireRate);
 		}
 	}
 }
