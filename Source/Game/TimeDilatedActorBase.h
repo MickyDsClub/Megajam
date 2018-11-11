@@ -47,9 +47,10 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	EMovementType MovementType = EMovementType::Default;
-private:
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
+private:
 
 	FVector GlobalStartLocation = FVector(0);
 
