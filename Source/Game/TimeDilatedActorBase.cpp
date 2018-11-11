@@ -21,7 +21,14 @@ void ATimeDilatedActorBase::BeginPlay()
 	Super::BeginPlay();
 
 	Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	Player->AddTimeDilatedActor(this);
+	if (Player)
+	{
+		Player->AddTimeDilatedActor(this);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Didn't find player!"));
+	}
 
 	GlobalStartLocation = GetActorLocation();
 	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
@@ -42,15 +49,15 @@ void ATimeDilatedActorBase::SetCustomTimeDilation(float NormalizedSpeed)
 {
 	switch (MovementType)
 	{
-	case EMovementType::MovesWithPlayer:
-		CustomTimeDilation = NormalizedSpeed;
-		break;
-	case EMovementType::MovesOppositeOfPlayer:
-		CustomTimeDilation = 1 - NormalizedSpeed;
-		break;
-	case EMovementType::Default:
-		CustomTimeDilation = 1;
-		break;
+		case EMovementType::MovesWithPlayer:
+			CustomTimeDilation = NormalizedSpeed;
+			break;
+		case EMovementType::MovesOppositeOfPlayer:
+			CustomTimeDilation = 1 - NormalizedSpeed;
+			break;
+		case EMovementType::Default:
+			CustomTimeDilation = 1;
+			break;
 	}
 }
 

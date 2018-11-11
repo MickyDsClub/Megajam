@@ -48,7 +48,14 @@ void AGameCharacter::Tick(float DeltaTime)
 
 	for (auto& Actor : TimeDilatedActors)
 	{
+		if (Actor)
+		{
 		Actor->SetCustomTimeDilation(GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed());
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("NULLPTR in TimeDilatedActors TArray"));
+		}
 	}
 }
 
@@ -76,4 +83,9 @@ void AGameCharacter::TurnAtRate(float Rate)
 void AGameCharacter::LookUpAtRate(float Rate)
 {
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AGameCharacter::MoveToSpawn()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Running Function: MoveToSpawn"));
 }

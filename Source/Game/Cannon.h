@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "TimeDilatedActorBase.h"
 #include "Cannon.generated.h"
 
 class AProjectileActorBase;
 
 UCLASS()
-class GAME_API ACannon : public AActor
+class GAME_API ACannon : public ATimeDilatedActorBase
 {
 	GENERATED_BODY()
 	
@@ -27,10 +27,7 @@ public:
 
 	void Shoot();
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditAnywhere)
 		TSubclassOf<AProjectileActorBase> Projectile;
 
 	UPROPERTY(EditAnywhere)

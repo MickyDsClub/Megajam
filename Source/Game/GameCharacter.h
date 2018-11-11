@@ -33,6 +33,8 @@ public:
 
 	void AddTimeDilatedActor(ATimeDilatedActorBase* Actor) { TimeDilatedActors.Add(Actor); }
 
+	void MoveToSpawn();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
