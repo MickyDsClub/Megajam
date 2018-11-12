@@ -22,7 +22,7 @@ void AProjectileActorBase::BeginPlay()
 
 void AProjectileActorBase::BeginOverlap(class AActor* OverlappedActor, class AActor* OtherActor)
 {
-	if (Player)
+	if (Player && OtherActor->IsA(AGameCharacter::StaticClass()))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlapping Player"));
 		Player->RestartLevel();
