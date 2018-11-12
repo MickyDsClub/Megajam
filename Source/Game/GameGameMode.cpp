@@ -7,6 +7,7 @@
 #include "Misc/Char.h"
 #include "SaveLevels.h"
 #include "UObject/ConstructorHelpers.h"
+#include "UI/MainMenuWidget.h"
 
 AGameGameMode::AGameGameMode()
 	: Super()

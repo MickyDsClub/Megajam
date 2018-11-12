@@ -7,6 +7,7 @@
 #include "GameGameMode.generated.h"
 
 class USaveLevels;
+class UMainMenuWidget;
 
 UCLASS(minimalapi)
 class AGameGameMode : public AGameModeBase
@@ -24,7 +25,13 @@ public:
 
 	void SaveFile();
 
+	void setMainMenuWidget(UMainMenuWidget* inMainMenuWidget) { mainMenuWidget = inMainMenuWidget; }
+
+	USaveLevels* GetSaveLevels() { return SaveLevels; }
+
 private:
 	USaveLevels* SaveLevels;
+
+	UMainMenuWidget* mainMenuWidget;
 };
 
