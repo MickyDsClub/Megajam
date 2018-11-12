@@ -64,7 +64,7 @@ void AGameCharacter::Tick(float DeltaTime)
 			}
 			else
 			{
-				Actor->SetCustomTimeDilation();
+				Actor->SetCustomTimeDilation(NormalizedSpeed);
 			}
 		}
 		else
