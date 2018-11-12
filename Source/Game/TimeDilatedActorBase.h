@@ -30,6 +30,8 @@ public:
 
 	virtual void SetCustomTimeDilation(float NormalizedSpeed);
 
+	bool GetCanBeDestroyed() { return bCanBeDestroyed; }
+
 protected:
 	AGameCharacter* Player;
 
@@ -50,6 +52,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Mesh;
+
+	bool bCanBeDestroyed = false;
 private:
 
 	FVector GlobalStartLocation = FVector(0);
@@ -57,7 +61,6 @@ private:
 	FVector GlobalTargetLocation = FVector(0);
 
 	FTimerHandle TH_SwapDelay;
-
 
 	bool bTimerSet = false;
 	bool bMovesSameAsPlayer = false;

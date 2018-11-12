@@ -8,6 +8,7 @@
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimeDilatedActorBase.h"
+#include "Engine/World.h"
 
 AGameCharacter::AGameCharacter()
 {
@@ -25,7 +26,6 @@ void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	//saves the startlocation of each map, so the player can respawn there.
-	MapStartLocation = GetActorLocation();
 }
 
 void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -47,16 +47,33 @@ void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	TArray<ATimeDilatedActorBase*> actorsToBeDestroyed;
 	for (auto& Actor : TimeDilatedActors)
 	{
 		if (Actor)
 		{
-		Actor->SetCustomTimeDilation(GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed());
+			if (Actor->GetCanBeDestroyed())
+			{
+				actorsToBeDestroyed.Add(Actor);
+			}
+			else
+			{
+				Actor->SetCustomTimeDilation(GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed());
+			}
 		}
 		else
 		{
 			UE_LOG(LogTemp, Error, TEXT("NULLPTR in TimeDilatedActors TArray"));
+		}
+	}
+
+	for (auto& Actor : actorsToBeDestroyed)
+	{
+		if (Actor)
+		{
+			TimeDilatedActors.Remove(Actor);
+			Actor->Destroy();
+			Actor = nullptr;
 		}
 	}
 }
@@ -87,9 +104,9 @@ void AGameCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AGameCharacter::MoveToSpawn()
+void AGameCharacter::RestartLevel()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Running Function: MoveToSpawn"));
-	SetActorLocation(MapStartLocation);
-	SetActorRotation(MapStartRotation);
+
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
 }

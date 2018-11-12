@@ -19,11 +19,12 @@ public:
 	virtual void BeginPlay() override;
 
 	void LoadFile();
-void UpdateCompletedLevelsToFile(FString LevelName);
-void SaveFile();
+
+	void UpdateCompletedLevelsToFile(FString LevelName);
+
+	void SaveFile();
 
 private:
-
 	USaveLevels* SaveLevels;
 };
 

@@ -11,8 +11,6 @@ AProjectileActorBase::AProjectileActorBase()
 	ProjectileMovementComponent->InitialSpeed = 3000.0f;
 	ProjectileMovementComponent->MaxSpeed = 3000.0f;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
-
-
 }
 
 void AProjectileActorBase::BeginPlay()
@@ -27,7 +25,7 @@ void AProjectileActorBase::BeginOverlap(class AActor* OverlappedActor, class AAc
 	if (Player)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Overlapping Player"));
-		Player->MoveToSpawn();
-		//Destroy(); //Bullets will never be deleted, as we must remove them from ther TArray in player so as the game doesnt crash... NEEDS FIXING -HUGE MEMORY LEAK
+		Player->RestartLevel();
 	}
+	bCanBeDestroyed = true;
 }

@@ -10,18 +10,17 @@ UCLASS()
 class GAME_API USaveLevels : public USaveGame
 {
 	GENERATED_BODY()
-public:
 
-		
+public:
+	USaveLevels();
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-		int LevelsCompleted;
+	int LevelsCompleted;
 
-		UPROPERTY(VisibleAnywhere, Category = Basic)
-			FString SaveSlotName;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FString SaveSlotName;
 
-		UPROPERTY(VisibleAnywhere, Category = Basic)
-			uint32 UserIndex;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	uint32 UserIndex;
 
-		USaveLevels();
 };

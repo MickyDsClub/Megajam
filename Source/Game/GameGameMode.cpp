@@ -13,15 +13,17 @@ AGameGameMode::AGameGameMode()
 {
 }
 
-void AGameGameMode::BeginPlay() {
+void AGameGameMode::BeginPlay() 
+{
 	Super::BeginPlay();
 
-
 	LoadFile();
-	if (SaveLevels->LevelsCompleted >= 1) {
+	if (SaveLevels->LevelsCompleted >= 1) 
+	{
 		UE_LOG(LogTemp, Warning, TEXT("%i Levels completed!"), SaveLevels->LevelsCompleted);
 	}
-	else {
+	else 
+	{
 		UE_LOG(LogTemp, Warning, TEXT("Level 1 is NOT complete!"));
 	}
 	SaveFile();
@@ -44,14 +46,13 @@ void AGameGameMode::UpdateCompletedLevelsToFile(FString LevelName)
 {
 	LoadFile();
 
-
 	auto ListOfChars = LevelName.Right(1);
 	int level = FCString::Atoi(*ListOfChars);
 	UE_LOG(LogTemp, Warning, TEXT("Level name: %i"), level);
-	if (SaveLevels->LevelsCompleted < level) {
+	if (SaveLevels->LevelsCompleted < level) 
+	{
 		SaveLevels->LevelsCompleted = level;
 	}
-
 
 	SaveFile();
 }

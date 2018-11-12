@@ -13,13 +13,15 @@ class GAME_API AProjectileActorBase : public ATimeDilatedActorBase
 {
 	GENERATED_BODY()
 
-		AProjectileActorBase();
+public:
+	AProjectileActorBase();
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, Category = Movement)
-		UProjectileMovementComponent* ProjectileMovementComponent;
-
 	UFUNCTION()
-		void BeginOverlap(class AActor* OverlappedActor, class AActor* OtherActor);
+	void BeginOverlap(class AActor* OverlappedActor, class AActor* OtherActor);
+
+private:
+	UPROPERTY(VisibleAnywhere, Category = Movement)
+	UProjectileMovementComponent* ProjectileMovementComponent;
 };

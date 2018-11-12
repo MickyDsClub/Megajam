@@ -13,11 +13,13 @@ AEndOfLevelTrigger::AEndOfLevelTrigger()
 	OnActorBeginOverlap.AddDynamic(this, &AEndOfLevelTrigger::OnOverlapBegin);
 	bDrawBox = false;
 }
+
 void AEndOfLevelTrigger::BeginPlay()
 {
 	Super::BeginPlay();
+	// Not in use atm
 	Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
 
 	if (bDrawBox)
 	{
@@ -25,9 +27,10 @@ void AEndOfLevelTrigger::BeginPlay()
 	}
 
 }
-void AEndOfLevelTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor)
+
+void AEndOfLevelTrigger::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
-	if (OtherActor && (OtherActor != this) && (OtherActor == Player))
+	if (OtherActor->IsA(AGameCharacter::StaticClass()))
 	{
 		// print to screen using above defined method when actor enters trigger volume
 		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
@@ -35,8 +38,16 @@ void AEndOfLevelTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AAc
 
 		if (!NextLevelName.IsEmpty())
 		{
-			GameMode->UpdateCompletedLevelsToFile(UGameplayStatics::GetCurrentLevelName(GetWorld()));
-			UGameplayStatics::OpenLevel(GetWorld(), FName(*NextLevelName));
+			GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+			if (GameMode)
+			{
+				GameMode->UpdateCompletedLevelsToFile(UGameplayStatics::GetCurrentLevelName(GetWorld()));
+				UGameplayStatics::OpenLevel(GetWorld(), FName(*NextLevelName));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("EndOfLevelTrigger: Wrong gamemode in use"))
+			}
 		}
 		else
 		{

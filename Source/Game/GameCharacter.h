@@ -33,7 +33,7 @@ public:
 
 	void AddTimeDilatedActor(ATimeDilatedActorBase* Actor) { TimeDilatedActors.Add(Actor); }
 
-	void MoveToSpawn();
+	void RestartLevel();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -42,12 +42,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseLookUpRate;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	class UCameraComponent* Camera;
 
 private:
 	TArray<ATimeDilatedActorBase*> TimeDilatedActors;
-	FVector MapStartLocation;
-	FRotator MapStartRotation;
+
 };
 

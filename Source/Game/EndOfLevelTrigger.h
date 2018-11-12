@@ -20,18 +20,16 @@ public:
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
-		//void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-		void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
+	void OnOverlapBegin(class AActor* OverlappedActor, class AActor* OtherActor);
 	
 	UPROPERTY(EditAnywhere)
-		bool bDrawBox;
+	bool bDrawBox;
 private:
-
 	AGameCharacter* Player;
 
 	AGameGameMode* GameMode;
 
 	UPROPERTY(EditAnywhere)
-		FString NextLevelName;
+	FString NextLevelName;
 
 };

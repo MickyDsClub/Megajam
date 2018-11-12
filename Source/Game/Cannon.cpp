@@ -41,12 +41,8 @@ void ACannon::Tick(float DeltaTime)
 
 void ACannon::Shoot()
 {
-	UWorld* World = GetWorld();
-	if (World)
+	if (Projectile)
 	{
-		if (Projectile)
-		{
-			World->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
-		}
+		GetWorld()->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
 	}
 }

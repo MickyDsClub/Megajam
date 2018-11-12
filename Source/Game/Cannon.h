@@ -14,28 +14,23 @@ class GAME_API ACannon : public ATimeDilatedActorBase
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ACannon();
 
-protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
 	void Shoot();
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<AProjectileActorBase> Projectile;
+	TSubclassOf<AProjectileActorBase> Projectile;
 
 	UPROPERTY(EditAnywhere)
-		float FireRate;
+	float FireRate;
 
 	UPROPERTY(EditAnywhere)
-		float GunOffset;
-private:
+	float GunOffset;
 
 	float TimerTime;
 };

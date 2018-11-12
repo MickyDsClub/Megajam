@@ -4,9 +4,7 @@
 
 USaveLevels::USaveLevels()
 {
-
 	SaveSlotName = TEXT("data");
 	UserIndex = 0;
-
 }
 
