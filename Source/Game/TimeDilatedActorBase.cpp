@@ -78,7 +78,7 @@ void ATimeDilatedActorBase::Move(float DeltaTime)
 	else
 	{
 		Location += Velocity * DeltaTime * Direction;
-		SetActorLocation(Location, true);
+		SetActorLocation(Location);
 	}
 }
 

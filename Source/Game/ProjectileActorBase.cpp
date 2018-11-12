@@ -11,6 +11,7 @@ AProjectileActorBase::AProjectileActorBase()
 	ProjectileMovementComponent->InitialSpeed = 3000.0f;
 	ProjectileMovementComponent->MaxSpeed = 3000.0f;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
+	ProjectileMovementComponent->bSweepCollision = false;
 }
 
 void AProjectileActorBase::BeginPlay()
