@@ -56,6 +56,7 @@ bool UMainMenuWidget::Initialize()
 void UMainMenuWidget::onPlayButtonClicked()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_1"), TRAVEL_Absolute);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 }
 
 void UMainMenuWidget::onChangeLevelButtonClicked()
@@ -76,6 +77,7 @@ void UMainMenuWidget::onBackToMainMenuButtonClicked()
 void UMainMenuWidget::onLevel1ButtonClicked()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_1"), TRAVEL_Absolute);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 }
 
 void UMainMenuWidget::onLevel2ButtonClicked()
@@ -85,6 +87,7 @@ void UMainMenuWidget::onLevel2ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 2)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_2"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}
 }
@@ -96,6 +99,7 @@ void UMainMenuWidget::onLevel3ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 3)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_3"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}
 }
@@ -107,6 +111,7 @@ void UMainMenuWidget::onLevel4ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 4)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_4"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}
 }
@@ -118,6 +123,7 @@ void UMainMenuWidget::onLevel5ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 5)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_5"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}
 }
@@ -129,6 +135,7 @@ void UMainMenuWidget::onLevel6ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 6)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_6"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}
 }

@@ -35,6 +35,8 @@ public:
 
 	void RestartLevel();
 
+	void CreatePauseWidget();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
@@ -48,5 +50,7 @@ protected:
 private:
 	TArray<ATimeDilatedActorBase*> TimeDilatedActors;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class UPauseWidget> pauseWidget;
 };
 

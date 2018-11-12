@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TimeDilatedActorBase.h"
 #include "Engine/World.h"
+#include "UI/PauseWidget.h"
 
 AGameCharacter::AGameCharacter()
 {
@@ -34,6 +35,8 @@ void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("CreatePauseWidget", IE_Pressed, this, &AGameCharacter::CreatePauseWidget);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AGameCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AGameCharacter::MoveRight);
@@ -109,4 +112,15 @@ void AGameCharacter::RestartLevel()
 	UE_LOG(LogTemp, Warning, TEXT("Running Function: MoveToSpawn"));
 
 	UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
+}
+
+void AGameCharacter::CreatePauseWidget()
+{
+	auto PauseWidget = CreateWidget(GetWorld(), pauseWidget);
+	if (PauseWidget)
+	{
+		PauseWidget->AddToViewport();
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeUIOnly());
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
+	}
 }
