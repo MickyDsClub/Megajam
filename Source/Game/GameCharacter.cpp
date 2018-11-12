@@ -50,6 +50,9 @@ void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	float NormalizedSpeed = GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed();
+	if (NormalizedSpeed > 1)
+		NormalizedSpeed = 1;
 	TArray<ATimeDilatedActorBase*> actorsToBeDestroyed;
 	for (auto& Actor : TimeDilatedActors)
 	{
@@ -61,7 +64,7 @@ void AGameCharacter::Tick(float DeltaTime)
 			}
 			else
 			{
-				Actor->SetCustomTimeDilation(GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed());
+				Actor->SetCustomTimeDilation();
 			}
 		}
 		else
