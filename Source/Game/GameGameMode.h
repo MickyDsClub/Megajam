@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "GameGameMode.generated.h"
 
+class USaveLevels;
+
 UCLASS(minimalapi)
 class AGameGameMode : public AGameModeBase
 {
@@ -13,7 +15,15 @@ class AGameGameMode : public AGameModeBase
 
 public:
 	AGameGameMode();
+
+	virtual void BeginPlay() override;
+
+	void LoadFile();
+void UpdateCompletedLevelsToFile(FString LevelName);
+void SaveFile();
+
+private:
+
+	USaveLevels* SaveLevels;
 };
-
-
 

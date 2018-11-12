@@ -7,6 +7,7 @@
 #include "EndOfLevelTrigger.generated.h"
 
 class AGameCharacter;
+class AGameGameMode;
 UCLASS()
 class GAME_API AEndOfLevelTrigger : public ATriggerVolume
 {
@@ -27,6 +28,8 @@ public:
 private:
 
 	AGameCharacter* Player;
+
+	AGameGameMode* GameMode;
 
 	UPROPERTY(EditAnywhere)
 		FString NextLevelName;

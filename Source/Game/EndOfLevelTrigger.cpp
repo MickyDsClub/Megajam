@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 
+#include "GameGameMode.h"
 #include "GameCharacter.h"
 
 AEndOfLevelTrigger::AEndOfLevelTrigger()
@@ -16,6 +17,7 @@ void AEndOfLevelTrigger::BeginPlay()
 {
 	Super::BeginPlay();
 	Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 
 	if (bDrawBox)
 	{
@@ -33,6 +35,7 @@ void AEndOfLevelTrigger::OnOverlapBegin(class AActor* OverlappedActor, class AAc
 
 		if (!NextLevelName.IsEmpty())
 		{
+			GameMode->UpdateCompletedLevelsToFile(UGameplayStatics::GetCurrentLevelName(GetWorld()));
 			UGameplayStatics::OpenLevel(GetWorld(), FName(*NextLevelName));
 		}
 		else
