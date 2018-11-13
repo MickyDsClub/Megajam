@@ -43,6 +43,6 @@ void ACannon::Shoot()
 {
 	if (Projectile)
 	{
-		GetWorld()->SpawnActor<AProjectileActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
+		GetWorld()->SpawnActor<ATimeDilatedActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
 	}
 }

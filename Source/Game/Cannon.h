@@ -24,7 +24,7 @@ private:
 	void Shoot();
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AProjectileActorBase> Projectile;
+	TSubclassOf<ATimeDilatedActorBase> Projectile;
 
 	UPROPERTY(EditAnywhere)
 	float FireRate;
