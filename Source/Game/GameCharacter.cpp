@@ -50,38 +50,10 @@ void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	float NormalizedSpeed = GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed();
+
+	NormalizedSpeed = GetMovementComponent()->Velocity.Size() / GetMovementComponent()->GetMaxSpeed();
 	if (NormalizedSpeed > 1)
 		NormalizedSpeed = 1;
-	TArray<ATimeDilatedActorBase*> actorsToBeDestroyed;
-	for (auto& Actor : TimeDilatedActors)
-	{
-		if (Actor)
-		{
-			if (Actor->GetCanBeDestroyed())
-			{
-				actorsToBeDestroyed.Add(Actor);
-			}
-			else
-			{
-				Actor->SetCustomTimeDilation(NormalizedSpeed);
-			}
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("NULLPTR in TimeDilatedActors TArray"));
-		}
-	}
-
-	for (auto& Actor : actorsToBeDestroyed)
-	{
-		if (Actor)
-		{
-			TimeDilatedActors.Remove(Actor);
-			Actor->Destroy();
-			Actor = nullptr;
-		}
-	}
 }
 
 void AGameCharacter::MoveForward(float Value)

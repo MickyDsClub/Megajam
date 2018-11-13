@@ -54,8 +54,8 @@ protected:
 	UStaticMeshComponent* Mesh;
 
 	bool bCanBeDestroyed = false;
-private:
 
+private:
 	FVector GlobalStartLocation = FVector(0);
 
 	FVector GlobalTargetLocation = FVector(0);

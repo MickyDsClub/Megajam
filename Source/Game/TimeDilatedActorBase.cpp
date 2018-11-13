@@ -21,14 +21,6 @@ void ATimeDilatedActorBase::BeginPlay()
 	Super::BeginPlay();
 
 	Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (Player)
-	{
-		Player->AddTimeDilatedActor(this);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Didn't find player!"));
-	}
 
 	GlobalStartLocation = GetActorLocation();
 	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
@@ -37,6 +29,11 @@ void ATimeDilatedActorBase::BeginPlay()
 void ATimeDilatedActorBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (Player)
+	{
+		SetCustomTimeDilation(Player->GetNormalizedSpeed());
+	}
 
 	if (bIsPlatformer)
 	{

@@ -31,11 +31,11 @@ public:
 
 	void LookUpAtRate(float Rate);
 
-	void AddTimeDilatedActor(ATimeDilatedActorBase* Actor) { TimeDilatedActors.Add(Actor); }
-
 	void RestartLevel();
 
 	void CreatePauseWidget();
+
+	float GetNormalizedSpeed() { return NormalizedSpeed; }
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
@@ -48,7 +48,7 @@ protected:
 	class UCameraComponent* Camera;
 
 private:
-	TArray<ATimeDilatedActorBase*> TimeDilatedActors;
+	float NormalizedSpeed = 0.0f;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UPauseWidget> pauseWidget;

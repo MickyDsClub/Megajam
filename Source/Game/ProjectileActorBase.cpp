@@ -28,5 +28,5 @@ void AProjectileActorBase::BeginOverlap(class AActor* OverlappedActor, class AAc
 		UE_LOG(LogTemp, Warning, TEXT("Overlapping Player"));
 		Player->RestartLevel();
 	}
-	bCanBeDestroyed = true;
+	Destroy();
 }

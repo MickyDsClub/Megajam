@@ -7,12 +7,10 @@
 
 ALevelStreamerActor::ALevelStreamerActor()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	OverlapVolume = CreateDefaultSubobject<UBoxComponent>("OverlapVolume");
 	RootComponent = OverlapVolume;
-
-
 }
 
 void ALevelStreamerActor::BeginPlay()
@@ -22,25 +20,25 @@ void ALevelStreamerActor::BeginPlay()
 	OverlapVolume->OnComponentBeginOverlap.AddUniqueDynamic(this, &ALevelStreamerActor::OverlapBegin);
 }
 
-void ALevelStreamerActor::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void ALevelStreamerActor::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->IsA(AGameCharacter::StaticClass()))
 	{
-		if (levelToLoad != "")
+		FLatentActionInfo LatentInfo;
+		switch (StreamType)
 		{
-			FLatentActionInfo LatentInfo;
-			UGameplayStatics::LoadStreamLevel(this, levelToLoad, true, true, LatentInfo);
-		}
-		else if (levelToUnLoad != "")
-		{
-			FLatentActionInfo LatentInfo;
-			UGameplayStatics::UnloadStreamLevel(this, levelToUnLoad, LatentInfo, true);
+		case EStreamType::Load:
+			if (levelToLoad != "")
+			{
+				UGameplayStatics::LoadStreamLevel(GetWorld(), levelToLoad, true, false, LatentInfo);
+			}
+			break;
+		case EStreamType::Unload:
+			if (levelToUnLoad != "")
+			{
+				UGameplayStatics::UnloadStreamLevel(GetWorld(), levelToUnLoad, LatentInfo, false);
+			}
+			break;
 		}
 	}
 }
