@@ -32,5 +32,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	float GunOffset;
 
+	UPROPERTY(EditDefaultsOnly)
+	class USoundBase* ShootSound;
+
 	float TimerTime;
 };
