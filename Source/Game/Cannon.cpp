@@ -4,6 +4,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "TimerManager.h"
 #include "Engine/World.h"
+#include "Sound/SoundBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Math/UnrealMathUtility.h"
 
 #include "ProjectileActorBase.h"
 
@@ -44,5 +47,7 @@ void ACannon::Shoot()
 	if (Projectile)
 	{
 		GetWorld()->SpawnActor<ATimeDilatedActorBase>(Projectile, GetActorLocation()+GetActorForwardVector().GetSafeNormal()*GunOffset, GetActorRotation());
+		if(ShootSound)
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ShootSound, GetActorLocation(), 1, FMath::RandRange(0.9f,1.1f));
 	}
 }
