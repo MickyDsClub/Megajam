@@ -23,6 +23,11 @@ bool UMainMenuWidget::Initialize()
 	level4Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel4ButtonClicked);
 	level5Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel5ButtonClicked);
 	level6Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel6ButtonClicked);
+	level7Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel7ButtonClicked);
+	level8Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel8ButtonClicked);
+	level9Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel9ButtonClicked);
+	level10Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel10ButtonClicked);
+	level11Button->OnClicked.AddDynamic(this, &UMainMenuWidget::onLevel11ButtonClicked);
 
 	// Using SaveLevels to check what levels to be clickable / showable
 	auto GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
@@ -35,6 +40,16 @@ bool UMainMenuWidget::Initialize()
 
 			switch (SaveLevels->LevelsCompleted)
 			{
+			case 11:
+				level6Button->SetVisibility(ESlateVisibility::Visible);
+			case 10:
+				level6Button->SetVisibility(ESlateVisibility::Visible);
+			case 9:
+				level6Button->SetVisibility(ESlateVisibility::Visible);
+			case 8:
+				level6Button->SetVisibility(ESlateVisibility::Visible);
+			case 7:
+				level6Button->SetVisibility(ESlateVisibility::Visible);
 			case 6:
 				level6Button->SetVisibility(ESlateVisibility::Visible);
 			case 5:
@@ -135,6 +150,66 @@ void UMainMenuWidget::onLevel6ButtonClicked()
 		if (SaveLevels->LevelsCompleted >= 6)
 		{
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_6"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		}
+	}
+}
+
+void UMainMenuWidget::onLevel7ButtonClicked()
+{
+	if (SaveLevels)
+	{
+		if (SaveLevels->LevelsCompleted >= 7)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_7"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		}
+	}
+}
+
+void UMainMenuWidget::onLevel8ButtonClicked()
+{
+	if (SaveLevels)
+	{
+		if (SaveLevels->LevelsCompleted >= 8)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_8"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		}
+	}
+}
+
+void UMainMenuWidget::onLevel9ButtonClicked()
+{
+	if (SaveLevels)
+	{
+		if (SaveLevels->LevelsCompleted >= 9)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_9"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		}
+	}
+}
+
+void UMainMenuWidget::onLevel10ButtonClicked()
+{
+	if (SaveLevels)
+	{
+		if (SaveLevels->LevelsCompleted >= 10)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_10"), TRAVEL_Absolute);
+			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+		}
+	}
+}
+
+void UMainMenuWidget::onLevel11ButtonClicked()
+{
+	if (SaveLevels)
+	{
+		if (SaveLevels->LevelsCompleted >= 11)
+		{
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_11"), TRAVEL_Absolute);
 			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
 	}

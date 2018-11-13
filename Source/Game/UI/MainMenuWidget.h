@@ -53,6 +53,22 @@ private:
 	UFUNCTION()
 	void onLevel6ButtonClicked();
 
+	UFUNCTION()
+	void onLevel7ButtonClicked();
+
+	UFUNCTION()
+	void onLevel8ButtonClicked();
+
+	UFUNCTION()
+	void onLevel9ButtonClicked();
+
+	UFUNCTION()
+	void onLevel10ButtonClicked();
+
+	UFUNCTION()
+	void onLevel11ButtonClicked();
+
+
 	UPROPERTY(meta = (BindWidget))
 	UWidgetSwitcher* widgetSwitcher;
 
@@ -85,6 +101,21 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* level6Button;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* level7Button;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* level8Button;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* level9Button;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* level10Button;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* level11Button;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* levelsCompletedText;
