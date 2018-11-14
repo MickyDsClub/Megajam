@@ -47,7 +47,12 @@ void AGameGameMode::UpdateCompletedLevelsToFile(FString LevelName)
 {
 	LoadFile();
 
-	auto ListOfChars = LevelName.Right(1);
+	auto ListOfChars = LevelName.Right(2);
+	const TCHAR* find = new TCHAR('_');
+	const TCHAR* replace = new TCHAR(' ');
+	auto test = ListOfChars.GetCharArray().GetData();
+	ListOfChars.Replace(find, replace);
+	ListOfChars.TrimStartAndEndInline();
 	int level = FCString::Atoi(*ListOfChars);
 	UE_LOG(LogTemp, Warning, TEXT("Level name: %i"), level);
 	if (SaveLevels->LevelsCompleted < level) 
