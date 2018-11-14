@@ -10,6 +10,7 @@
 #include "TimeDilatedActorBase.h"
 #include "Engine/World.h"
 #include "UI/PauseWidget.h"
+#include "MyGameInstance.h"
 
 AGameCharacter::AGameCharacter()
 {
@@ -85,8 +86,15 @@ void AGameCharacter::LookUpAtRate(float Rate)
 void AGameCharacter::RestartLevel()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Running Function: MoveToSpawn"));
-
-	UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
+	auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	if (MyGameInstance->GetIsStreamingLevel())
+	{
+		SetActorLocation(SpawnLocation);
+	}
+	else
+	{
+		UGameplayStatics::OpenLevel(GetWorld(), FName(*UGameplayStatics::GetCurrentLevelName(GetWorld())));
+	}
 }
 
 void AGameCharacter::CreatePauseWidget()

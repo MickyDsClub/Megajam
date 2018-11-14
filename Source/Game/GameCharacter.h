@@ -37,6 +37,8 @@ public:
 
 	float GetNormalizedSpeed() { return NormalizedSpeed; }
 
+	void SetSpawnLocation(FVector value) { SpawnLocation = value; }
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
@@ -52,5 +54,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UPauseWidget> pauseWidget;
+
+	FVector SpawnLocation;
 };
 

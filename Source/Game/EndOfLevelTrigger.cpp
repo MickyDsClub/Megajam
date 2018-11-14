@@ -7,6 +7,7 @@
 
 #include "GameGameMode.h"
 #include "GameCharacter.h"
+#include "MyGameInstance.h"
 
 AEndOfLevelTrigger::AEndOfLevelTrigger()
 {
@@ -35,23 +36,37 @@ void AEndOfLevelTrigger::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherAc
 		// print to screen using above defined method when actor enters trigger volume
 		UE_LOG(LogTemp, Warning, TEXT("Overlap Begin"));
 		UE_LOG(LogTemp, Warning, TEXT("Other Actor = %s"), *OtherActor->GetName());
-
-		if (!NextLevelName.IsEmpty())
+		auto Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+		if (MyGameInstance->GetIsStreamingLevel())
 		{
-			GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
-			if (GameMode)
+			auto SpawnLocation = GetTransform().TransformPosition(PlayerSpawnLocation);
+			
+			Player->SetSpawnLocation(SpawnLocation);
+			if (bIsLava)
 			{
-				GameMode->UpdateCompletedLevelsToFile(UGameplayStatics::GetCurrentLevelName(GetWorld()));
-				UGameplayStatics::OpenLevel(GetWorld(), FName(*NextLevelName));
-			}
-			else
-			{
-				UE_LOG(LogTemp, Warning, TEXT("EndOfLevelTrigger: Wrong gamemode in use"))
+			Player->SetActorLocation(SpawnLocation);
 			}
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Can't find level with name: %s"), *NextLevelName);
+			if (!NextLevelName.IsEmpty())
+			{
+				GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+				if (GameMode)
+				{
+					GameMode->UpdateCompletedLevelsToFile(UGameplayStatics::GetCurrentLevelName(GetWorld()));
+					UGameplayStatics::OpenLevel(GetWorld(), FName(*NextLevelName));
+				}
+				else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("EndOfLevelTrigger: Wrong gamemode in use"))
+				}
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Can't find level with name: %s"), *NextLevelName);
+			}
 		}
 	}
 }

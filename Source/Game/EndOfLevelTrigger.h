@@ -32,4 +32,10 @@ private:
 	UPROPERTY(EditAnywhere)
 	FString NextLevelName;
 
+	UPROPERTY(EditAnywhere)
+	bool bIsLava;
+
+	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
+	FVector PlayerSpawnLocation = FVector(0);
+
 };

@@ -8,6 +8,7 @@
 #include "Components/TextBlock.h"
 #include "GameGameMode.h"
 #include "SaveLevels.h"
+#include "MyGameInstance.h"
 
 bool UMainMenuWidget::Initialize()
 {
@@ -41,15 +42,15 @@ bool UMainMenuWidget::Initialize()
 			switch (SaveLevels->LevelsCompleted)
 			{
 			case 11:
-				level6Button->SetVisibility(ESlateVisibility::Visible);
+				level11Button->SetVisibility(ESlateVisibility::Visible);
 			case 10:
-				level6Button->SetVisibility(ESlateVisibility::Visible);
+				level10Button->SetVisibility(ESlateVisibility::Visible);
 			case 9:
-				level6Button->SetVisibility(ESlateVisibility::Visible);
+				level9Button->SetVisibility(ESlateVisibility::Visible);
 			case 8:
-				level6Button->SetVisibility(ESlateVisibility::Visible);
+				level8Button->SetVisibility(ESlateVisibility::Visible);
 			case 7:
-				level6Button->SetVisibility(ESlateVisibility::Visible);
+				level7Button->SetVisibility(ESlateVisibility::Visible);
 			case 6:
 				level6Button->SetVisibility(ESlateVisibility::Visible);
 			case 5:
@@ -70,7 +71,9 @@ bool UMainMenuWidget::Initialize()
 
 void UMainMenuWidget::onPlayButtonClicked()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_1"), TRAVEL_Absolute);
+	auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	MyGameInstance->SetIsStreamingLevel(true);
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Streaming/s_Main"), TRAVEL_Absolute);
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 }
 
