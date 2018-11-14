@@ -79,6 +79,8 @@ void UMainMenuWidget::onPlayButtonClicked()
 
 void UMainMenuWidget::onChangeLevelButtonClicked()
 {
+	auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	MyGameInstance->SetIsStreamingLevel(false);
 	widgetSwitcher->SetActiveWidgetIndex(1);
 }
 
