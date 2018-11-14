@@ -48,11 +48,13 @@ void AGameGameMode::UpdateCompletedLevelsToFile(FString LevelName)
 	LoadFile();
 
 	auto ListOfChars = LevelName.Right(2);
-	const TCHAR* find = new TCHAR('_');
-	const TCHAR* replace = new TCHAR(' ');
-	auto test = ListOfChars.GetCharArray().GetData();
-	ListOfChars.Replace(find, replace);
-	ListOfChars.TrimStartAndEndInline();
+	UE_LOG(LogTemp, Warning, TEXT("Level name: %s"), *ListOfChars);
+
+	if (ListOfChars.StartsWith("_"))
+	{
+		ListOfChars = ListOfChars.Right(1);
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Level name AFTER replace: %s"), *ListOfChars);
 	int level = FCString::Atoi(*ListOfChars);
 	UE_LOG(LogTemp, Warning, TEXT("Level name: %i"), level);
 	if (SaveLevels->LevelsCompleted < level) 
