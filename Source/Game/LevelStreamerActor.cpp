@@ -24,21 +24,23 @@ void ALevelStreamerActor::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 {
 	if (OtherActor->IsA(AGameCharacter::StaticClass()))
 	{
-		if (levelToLoad != "")
+
+		FLatentActionInfo LatentInfo;
+		switch (StreamType)
 		{
-			FLatentActionInfo LatentInfo;
-			switch (StreamType)
-			{
-			case EStreamType::None:
+		case EStreamType::None:
+			if(levelToLoad != "")
 				UGameplayStatics::OpenLevel(GetWorld(), levelToLoad);
-				break;
-			case EStreamType::Load:
+			break;
+		case EStreamType::Load:
+			if(levelToLoad != "")
 				UGameplayStatics::LoadStreamLevel(GetWorld(), levelToLoad, true, false, LatentInfo);
-				break;
-			case EStreamType::Unload:
+			break;
+		case EStreamType::Unload:
+			if(levelToUnLoad != "")
 				UGameplayStatics::UnloadStreamLevel(GetWorld(), levelToUnLoad, LatentInfo, false);
-				break;
-			}
+			break;
 		}
+		
 	}
 }

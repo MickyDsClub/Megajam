@@ -37,7 +37,7 @@ bool UMainMenuWidget::Initialize()
 		SaveLevels = GameMode->GetSaveLevels();
 		if (SaveLevels)
 		{
-			levelsCompletedText->SetText(FText::FromString("Levels completed: " + FString::FormatAsNumber(SaveLevels->LevelsCompleted)));
+			levelsCompletedText->SetText(FText::FromString("Levels unlocked: " + FString::FormatAsNumber(SaveLevels->LevelsCompleted)));
 
 			switch (SaveLevels->LevelsCompleted)
 			{
