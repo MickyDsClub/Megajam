@@ -39,6 +39,8 @@ public:
 
 	void SetSpawnLocation(FVector value) { SpawnLocation = value; }
 
+	int GetDeaths() { return Deaths; }
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseTurnRate;
@@ -56,5 +58,7 @@ private:
 	TSubclassOf<class UPauseWidget> pauseWidget;
 
 	FVector SpawnLocation;
+
+	int Deaths = 0;
 };
 

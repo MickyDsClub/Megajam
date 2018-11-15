@@ -8,6 +8,8 @@
 #include "SaveLevels.h"
 #include "UObject/ConstructorHelpers.h"
 #include "UI/MainMenuWidget.h"
+#include "MyGameInstance.h"
+#include "GameCharacter.h"
 
 AGameGameMode::AGameGameMode()
 	: Super()
@@ -19,6 +21,7 @@ void AGameGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	LoadFile();
+
 	if (SaveLevels->LevelsCompleted >= 1) 
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%i Levels completed!"), SaveLevels->LevelsCompleted);
@@ -27,6 +30,7 @@ void AGameGameMode::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Level 1 is NOT complete!"));
 	}
+
 	SaveFile();
 }
 
@@ -60,6 +64,42 @@ void AGameGameMode::UpdateCompletedLevelsToFile(FString LevelName)
 	if (SaveLevels->LevelsCompleted < level) 
 	{
 		SaveLevels->LevelsCompleted = level;
+	}
+
+	SaveFile();
+}
+
+void AGameGameMode::UpdateBestRunStats()
+{
+	LoadFile();
+
+	auto Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (Player)
+	{
+		int deaths = Player->GetDeaths();
+		int time = GetWorld()->GetTimeSeconds();
+
+		// Only update when one of these are true:
+		// 1. Deaths are not set yet
+		// 2. Deaths are lower than previous best
+		// 3. If deaths are equal, the time must be better
+		if (SaveLevels->totalDeaths == -1)
+		{
+			SaveLevels->totalDeaths = deaths;
+			SaveLevels->elapsedTime = time;
+		}
+		else if (deaths < SaveLevels->totalDeaths)
+		{
+			SaveLevels->totalDeaths = deaths;
+			SaveLevels->elapsedTime = time;
+		}
+		else if(deaths == SaveLevels->totalDeaths)
+		{
+			if (time < SaveLevels->elapsedTime)
+			{
+				SaveLevels->elapsedTime = time;
+			}
+		}
 	}
 
 	SaveFile();

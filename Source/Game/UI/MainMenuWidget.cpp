@@ -66,15 +66,26 @@ bool UMainMenuWidget::Initialize()
 			}
 		}
 	}
+
+	updateLastFullRun();
+	updateBestFullRun();
+
 	return Success;
 }
 
 void UMainMenuWidget::onPlayButtonClicked()
 {
-	auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
-	MyGameInstance->SetIsStreamingLevel(true);
-	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Streaming/s_Main"), TRAVEL_Absolute);
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	auto GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	if (GameInstance)
+	{
+		GameInstance->SetIsStreamingLevel(true);
+		UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/Streaming/s_Main"), TRAVEL_Absolute);
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Wrong gameinstance in use!"))
+	}
 }
 
 void UMainMenuWidget::onChangeLevelButtonClicked()
@@ -217,5 +228,112 @@ void UMainMenuWidget::onLevel11ButtonClicked()
 			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Maps/level_11"), TRAVEL_Absolute);
 			UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
 		}
+	}
+}
+
+void UMainMenuWidget::updateLastFullRun()
+{
+	auto GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	if (GameInstance)
+	{
+		auto time = GameInstance->getLastElapsedTime();
+		if (time > 0.0f)
+		{
+			FString minutes = "";
+			int mins = FMath::FloorToInt(time / 60);
+			if (mins == 1)
+			{
+				minutes = FString::FromInt(mins) + " minute, ";
+			}
+			else if (mins > 1)
+			{
+				minutes = FString::FromInt(mins) + " minutes, ";
+			}
+
+			FString seconds = "";
+			int secs = time % 60;
+			if (secs == 1)
+			{
+				seconds = FString::FromInt(secs) + " second";
+			}
+			else if (secs > 1)
+			{
+				seconds = FString::FromInt(secs) + " seconds";
+			}
+			lastElapsedTimeText->SetText(FText::FromString(minutes + seconds));
+
+		}
+		else
+		{
+			lastElapsedTimeText->SetText(FText::FromString("-"));
+		}
+
+		int deaths = GameInstance->getLastTotalDeaths();
+		if (deaths >= 0)
+		{
+			lastTotalDeathsText->SetText(FText::AsNumber(deaths));
+		}
+		else
+		{
+			lastTotalDeathsText->SetText(FText::FromString("-"));
+		}
+	}
+	else
+	{
+		lastElapsedTimeText->SetText(FText::FromString("-"));
+		lastTotalDeathsText->SetText(FText::FromString("-"));
+	}
+}
+
+void UMainMenuWidget::updateBestFullRun()
+{
+	if (SaveLevels)
+	{
+		auto time = SaveLevels->elapsedTime;
+		if (time > 0.0f)
+		{
+			FString minutes = "";
+			int mins = FMath::FloorToInt(time / 60);
+			if (mins == 1)
+			{
+				minutes = FString::FromInt(mins) + " minute, ";
+			}
+			else if (mins > 1)
+			{
+				minutes = FString::FromInt(mins) + " minutes, ";
+			}
+
+			FString seconds = "";
+			int secs = time % 60;
+			if (secs == 1)
+			{
+				seconds = FString::FromInt(secs) + " second";
+			}
+			else if (secs > 1)
+			{
+				seconds = FString::FromInt(secs) + " seconds";
+			}
+			bestElapsedTimeText->SetText(FText::FromString(minutes + seconds));
+
+		}
+		else
+		{
+			bestElapsedTimeText->SetText(FText::FromString("-"));
+		}
+
+		int deaths = SaveLevels->totalDeaths;
+		if (deaths >= 0)
+		{
+			bestTotalDeathsText->SetText(FText::AsNumber(deaths));
+		}
+		else
+		{
+			bestTotalDeathsText->SetText(FText::FromString("-"));
+		}
+	}
+	else
+	{
+		bestElapsedTimeText->SetText(FText::FromString("-"));
+		bestTotalDeathsText->SetText(FText::FromString("-"));
 	}
 }

@@ -18,6 +18,12 @@ public:
 	int LevelsCompleted;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)
+	int elapsedTime = -1;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	int totalDeaths = -1;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
 	FString SaveSlotName;
 
 	UPROPERTY(VisibleAnywhere, Category = Basic)

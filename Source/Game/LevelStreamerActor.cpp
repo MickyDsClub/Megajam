@@ -4,6 +4,9 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameCharacter.h"
+#include "Engine/World.h"
+#include "MyGameInstance.h"
+#include "GameGameMode.h"
 
 ALevelStreamerActor::ALevelStreamerActor()
 {
@@ -24,13 +27,31 @@ void ALevelStreamerActor::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 {
 	if (OtherActor->IsA(AGameCharacter::StaticClass()))
 	{
-
 		FLatentActionInfo LatentInfo;
 		switch (StreamType)
 		{
 		case EStreamType::None:
-			if(levelToLoad != "")
+			if (levelToLoad != "")
+			{
+				if (levelToLoad == "MainMenu")
+				{
+					auto GameMode = Cast<AGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+					if (GameMode)
+					{
+						GameMode->UpdateBestRunStats();
+					}
+
+					auto GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+					auto Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+					if (GameInstance && Player)
+					{
+						GameInstance->setLastTotalDeaths(Player->GetDeaths());
+						GameInstance->setLastElapsedTime(GetWorld()->GetTimeSeconds());
+					}
+				}
 				UGameplayStatics::OpenLevel(GetWorld(), levelToLoad);
+			}
+
 			break;
 		case EStreamType::Load:
 			if(levelToLoad != "")
