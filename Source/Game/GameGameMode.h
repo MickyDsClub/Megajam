@@ -23,6 +23,8 @@ public:
 
 	void UpdateCompletedLevelsToFile(FString LevelName);
 
+	void UpdateBestRunStats();
+
 	void SaveFile();
 
 	void setMainMenuWidget(UMainMenuWidget* inMainMenuWidget) { mainMenuWidget = inMainMenuWidget; }

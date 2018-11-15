@@ -68,6 +68,9 @@ private:
 	UFUNCTION()
 	void onLevel11ButtonClicked();
 
+	void updateLastFullRun();
+
+	void updateBestFullRun();
 
 	UPROPERTY(meta = (BindWidget))
 	UWidgetSwitcher* widgetSwitcher;
@@ -119,6 +122,18 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* levelsCompletedText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* lastElapsedTimeText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* lastTotalDeathsText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* bestElapsedTimeText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* bestTotalDeathsText;
 
 	USaveLevels* SaveLevels;
 };

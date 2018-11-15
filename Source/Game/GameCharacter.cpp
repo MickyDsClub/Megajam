@@ -27,7 +27,6 @@ AGameCharacter::AGameCharacter()
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	//saves the startlocation of each map, so the player can respawn there.
 }
 
 void AGameCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -90,6 +89,7 @@ void AGameCharacter::RestartLevel()
 	if (MyGameInstance->GetIsStreamingLevel())
 	{
 		SetActorLocation(SpawnLocation);
+		Deaths++;
 	}
 	else
 	{
