@@ -47,7 +47,7 @@ void AEndOfLevelTrigger::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherAc
 			{
 				UE_LOG(LogTemp, Warning, TEXT("EndOfLevelTrigger: Wrong gamemode in use"))
 			}
-		}
+		} 
 		// print to screen using above defined method when actor enters trigger volume
 		auto Player = Cast<AGameCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 		auto MyGameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
@@ -58,7 +58,7 @@ void AEndOfLevelTrigger::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherAc
 			Player->SetSpawnLocation(SpawnLocation);
 			if (bIsLava)
 			{
-				Player->SetActorLocation(SpawnLocation);
+				Player->RestartLevel();
 			}
 		}
 		else
