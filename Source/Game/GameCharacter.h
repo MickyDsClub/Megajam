@@ -39,6 +39,8 @@ public:
 
 	void SetSpawnLocation(FVector value) { SpawnLocation = value; }
 
+	void IncrementDeaths() { Deaths++; }
+
 	int GetDeaths() { return Deaths; }
 
 protected:

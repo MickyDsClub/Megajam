@@ -58,7 +58,8 @@ void AEndOfLevelTrigger::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherAc
 			Player->SetSpawnLocation(SpawnLocation);
 			if (bIsLava)
 			{
-				Player->RestartLevel();
+				Player->IncrementDeaths();
+				Player->SetActorLocation(SpawnLocation);
 			}
 		}
 		else
